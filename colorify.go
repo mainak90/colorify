@@ -7,9 +7,9 @@ import (
 )
 
 type Colorify struct {
-	color Color
-	param Param
-	noColor bool
+	Color Color
+	Param Param
+	NoColor bool
 }
 
 type Param string
@@ -34,11 +34,11 @@ var (
 )
 
 func (c *Colorify) New() string {
-	c.noColor = isatty.IsTerminal(os.Stdout.Fd()) && isatty.IsCygwinTerminal(os.Stdout.Fd())
-	if c.param == "" {
-		c.param = Regular
+	c.NoColor = isatty.IsTerminal(os.Stdout.Fd()) && isatty.IsCygwinTerminal(os.Stdout.Fd())
+	if c.Param == "" {
+		c.Param = Regular
 	}
-	return fmt.Sprintf("%s%s%s", Base, c.param, c.color)
+	return fmt.Sprintf("%s%s%s", Base, c.Param, c.Color)
 }
 
 //func (c *Colorify) Reset() *Colorify {
