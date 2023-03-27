@@ -3,13 +3,14 @@
 `colorify` is a very simple implementation of a text stream formtatting library, usually out of a tty into stdout.
 
 Its mostly a simple implemention and not have all the robust options as `fatih/color` ANSI colorized output package. 
+It gets the job done and I use it frequently to generate colorized output myself, especially for colorizing CLI outputs.
 
 ## Install
-go get github.com/mainak90/colorify
+```bash
+    go get github.com/mainak90/colorify
+```
 
 ## Examples
-
-
 ```bash
     // Import the library into your code
     import "github.com/mainak90/colorify"
@@ -38,5 +39,4 @@ go get github.com/mainak90/colorify
 3. More functions.
 
 ## License
-
 The MIT License (MIT) - see [`LICENSE.md`](https://github.com/mainak90/colorify/blob/main/LICENSE.md) for more details
