@@ -9,17 +9,19 @@ go get github.com/mainak90/colorify
 
 ## Examples
 
-Import the library into your code
-```
+
+```bash
+    // Import the library into your code
     import "github.com/mainak90/colorify"
 ```
 
-Generate the color format as needed by starting an instance of colorify. And appending it into the fmt based wrapper interfaces.
-```
+```go
+    // Generate the color format as needed by starting an instance of colorify. And appending it into the fmt based wrapper interfaces.
+
     red := colorify.Colorify{Color: colorify.Red, Attr: colorify.Underline}
     yellow := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Regular}
-    red := colorify.Colorify{Color: colorify.Red, Attr: colorify.Underline}
-    yellow := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Regular}
+    redPrint := red.New()
+    yellowPrint := yellow.New()
     redPrint.Println("This", "is", "Sparta")
     yellowPrint.Println("This is yellow regular!!!")
     fmt.Println(yellowPrint.Sprintf("Sprintf message"))
