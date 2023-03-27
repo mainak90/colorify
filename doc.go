@@ -23,7 +23,7 @@ Quickstart on ways to use this:
 		Red, Green, Yellow, Blue, Purple, Cyan, White
 
 	// Formatting attributes supported
-	Bold, Italics, Underline
+	Bold, Italics, Underline, Reverse, Strikethrough
 
 Help furnish this package with more add-on features.
 */
