@@ -1,4 +1,4 @@
-# colorify
+# colorify [![PkgGoDev](https://pkg.go.dev/badge/github.com/mainak90/colorify)](https://pkg.go.dev/github.com/mainak90/colorify)
 
 `colorify` is a very simple implementation of a text stream formtatting library, usually out of a tty into stdout.
 
