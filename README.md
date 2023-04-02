@@ -43,7 +43,7 @@ It gets the job done and I use it frequently to generate colorized output myself
 ![img.png](img/img.png)
 
 ## Todo
-1. GH Actions pipelines.
+1. <strike>GH Actions pipelines</strike> -> `Done`
 2. Tests.
 3. More functions.
 
