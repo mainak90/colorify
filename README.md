@@ -1,4 +1,4 @@
-# colorify
+# colorify [![](https://github.com/mainak90/colorify/workflows/build/badge.svg)](https://github.com/mainak90/colorify/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/mainak90/colorify)](https://pkg.go.dev/github.com/mainak90/colorify)
 
 `colorify` is a very simple implementation of a text stream formtatting library, usually out of a tty into stdout.
 
@@ -43,9 +43,10 @@ It gets the job done and I use it frequently to generate colorized output myself
 ![img.png](img/img.png)
 
 ## Todo
-1. GH Actions pipelines.
+1. <strike>GH Actions pipelines</strike> -> `Done`
 2. Tests.
 3. More functions.
+4. Fix logged issues.
 
 ## License
 The MIT License (MIT) - see [`LICENSE.md`](https://github.com/mainak90/colorify/blob/main/LICENSE.md) for more details
