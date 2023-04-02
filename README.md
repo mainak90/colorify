@@ -46,6 +46,7 @@ It gets the job done and I use it frequently to generate colorized output myself
 1. <strike>GH Actions pipelines</strike> -> `Done`
 2. Tests.
 3. More functions.
+4. Fix logged issues.
 
 ## License
 The MIT License (MIT) - see [`LICENSE.md`](https://github.com/mainak90/colorify/blob/main/LICENSE.md) for more details
