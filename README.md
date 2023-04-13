@@ -17,27 +17,28 @@ It gets the job done and I use it frequently to generate colorized output myself
 ```
 
 ```go
-    // Generate the color format as needed by starting an instance of colorify. And appending it into the fmt based wrapper interfaces.
-    red := colorify.Colorify{Color: colorify.Red, Attr: colorify.Underline}
-    
-    // Attr has support for Bold, Strikethrough, Italics, Underline, Reverse etc.
-    yellow := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Regular}
-    yellowItalics := := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Italics}
-    yellowBold := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Bold}
-    yellowTransparent := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Transparent}
-    yellowColorReverse := colorify.Colorify{Color: colorify.Yellow, Attr: colorify.Reverse}
-
-    // Init New instance of the colorify config
-    redPrint := red.New()
-    yellowPrint := yellow.New()
-	
-    // Directly leverage the fmt go builtin interfaces.
-    redPrint.Println("This", "is", "Sparta")
-    yellowPrint.Println("This is yellow regular!!!")
-    fmt.Println(yellowPrint.Sprintf("Sprintf message"))
-    io.WriteString(os.Stdout, yellowPrint.Sprintln("This", "is", "Sparta"))
-    redPrint.Printf("%s", "This", "is", "a", "word")
+    // Initialite a colorify struct. Structs can be initialized either with only string attributes(bold/italics/reverse)
+	// Or also with color values set.
+	// Example --> Struct with no color set. 
+	noColStruct := colorify.Colorify{Attr: colorify.Underline}
+    // Example --> Struct with color preset.
+	withColStruct := colorify.Colorify{Color: colorify.Green, Attr: colorify.Bold}
+	// Supported attributes --> 
+	1. `colorify.Regular`: Regular text format.
+	2. `colorify.Italics`: Italicized text format.
+	3. `colorify.Transparent`: Transparent text format.
+	4. 	`colorify.Reverse`: Background reversed text format.
+    // Invoking the print functions after this is just as easy as calling the appropriate ones with particular arguments.
+	// Please note that the library has support column based coloring scheme, which means you can have as many colors in 
+	// one single line as you want.
+	io.WriteString(os.Stdout, noColStruct.Sprintln("This is regular", colorify.Green, "This is green!"))
+	noColStruct.Println(colorify.Red, "[Error]", colorify.Yellow, "This is a new error")
+    io.WriteString(os.Stdout, col.Sprintln("\n", colorify.Blue, "This", "is", "Sparta"))
+	// Example with color initialized in struct.
+    withColStruct.Println("Should be green and bold!")
 ```
+
+For more examples checkout the `examples/` directory.
 
 ## Output
 ![img.png](img/img.png)

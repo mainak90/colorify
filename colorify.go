@@ -7,9 +7,7 @@ package colorify
 
 import (
 	"fmt"
-	"github.com/mattn/go-isatty"
 	"io"
-	"os"
 )
 
 // Main struct for interfacing with all golang fmt functions.  Elems -->  1. Color --> The colored o/p choice.
@@ -48,34 +46,37 @@ var (
 	Italics   		Attr  = "3;"
 	Underline 		Attr  = "4;"
 	Reverse			Attr  = "7;"
-	Strikethrough 	Attr = "9;"
+	Strikethrough 	Attr  =  "9;"
 	Regular   		Attr  = "0;"
 )
 
-// Kind of the init func to init the main struct and set the ColorScheme to be used for all
-// fmt package interfaced functions.
-func (c *Colorify) New() *Colorify {
-	c.NoColor = isatty.IsTerminal(os.Stdout.Fd()) || isatty.IsCygwinTerminal(os.Stdout.Fd())
-	if !c.NoColor {
-		c.Attr = Regular
-		c.Color = Reset
-	}
-	if c.Attr == "" {
-		c.Attr = Regular
-	}
-	c.ColorScheme = fmt.Sprintf("%s%s%s", Base, c.Attr, c.Color)
-	//return fmt.Sprintf("%s%s%s", Base, c.Param, c.Color)
-	return c
-}
 
-// Convert all fmt function input []interface{} or []any to string output. This is then passed along to
-// all underlying fmt functions. Returns interface slice stringified and joined.
-func stringify(inf ...interface{}) string {
+func stringifyColumnar(c *Colorify, inf ...interface{}) string {
 	var infString string
+	defaultColor := makeColorString(c, c.Color)
+	infString += defaultColor
 	for _, val := range inf {
-		infString += fmt.Sprintf("%s%s", " ", val)
+		switch val.(type) {
+		case Color:
+			colScheme := makeColorString(c, val.(Color))
+			infString += fmt.Sprintf("%s", colScheme)
+		case string:
+			infString += fmt.Sprintf("%s%s", " ", val)
+		default:
+			infString += fmt.Sprintf("%s%s", " ", val)
+		}
 	}
 	return infString
+}
+
+
+func makeColorString(c *Colorify, col Color) string {
+	if col == "" {
+		col = Color(Reset)
+	}
+	c.Color = col
+	c.ColorScheme = fmt.Sprintf("%s%s%s", Base, c.Attr, c.Color)
+	return c.ColorScheme
 }
 
 // Done: Resets the coloration and formatting, mostly used right after statment execution.
@@ -83,37 +84,36 @@ func Done() string {
 	return fmt.Sprintf("%s%s%s", Base, Regular, Reset)
 }
 
-// Implements the fmt.Println interface just with the colorification addon.
 func (c *Colorify) Println(msg ...interface{}) (n int, err error) {
-	return fmt.Println(c.ColorScheme, stringify(msg...), Done())
+	return fmt.Println(stringifyColumnar(c, msg...), Done())
 }
 
 // Printf: Implements the fmt.Printf interface just with the colorification addon.
 func (c *Colorify) Printf(format string, msg ...interface{}) (n int, err error) {
-	return fmt.Printf("%s"+format+"%s", c.ColorScheme, stringify(msg...), Done())
+	return fmt.Printf(format, stringifyColumnar(c, msg...), Done())
 }
 
 // Fprintln: Implements the fmt.Fprintln interface just with the colorification addon.
 func (c *Colorify) Fprintln(w io.Writer, msg ...interface{}) (n int, err error) {
-	return fmt.Fprintln(w, c.ColorScheme, stringify(msg...), Done())
+	return fmt.Fprintln(w, stringifyColumnar(c, msg...), Done())
 }
 
 // Fprintf: Implements the fmt.Fprintf interface just with the colorification addon.
 func (c *Colorify) Fprintf(w io.Writer, format string, msg ...interface{}) (n int, err error) {
-	return fmt.Fprintf(w, "%s"+format+"%s", c.ColorScheme, stringify(msg...), Done())
+	return fmt.Fprintf(w, format, stringifyColumnar(c, msg...), Done())
 }
 
 //Fprint: Implements the fmt.Fprint interface just with the colorification addon.
 func (c *Colorify) Fprint(w io.Writer, msg ...interface{}) (n int, err error) {
-	return fmt.Fprint(w, c.ColorScheme, stringify(msg...), Done())
+	return fmt.Fprint(w, stringifyColumnar(c, msg...), Done())
 }
 
 // Sprintf: Implements the fmt.Sprintf interface just with the colorification addon.
 func (c *Colorify) Sprintf(msg ...interface{}) string {
-	return fmt.Sprintf("%s%s%s", c.ColorScheme, stringify(msg...), Done())
+	return fmt.Sprintf("%s%s", stringifyColumnar(c, msg...), Done())
 }
 
 // Sprintln: Implements the fmt.Sprintln interface just with the colorification addon.
 func (c *Colorify) Sprintln(msg ...interface{}) string {
-	return fmt.Sprintln(c.ColorScheme, stringify(msg...), Done())
+	return fmt.Sprintln(stringifyColumnar(c, msg...), Done())
 }
