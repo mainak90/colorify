@@ -10,7 +10,7 @@ import (
 func main() {
 	// Int the struct first, now this struct can be reused for all further interface invocations.
 	// In general as string attributes are seldom changed, you can initialize them directly at the struct level.
-	col := colorify.Colorify{Attr: colorify.Bold}
+	col := colorify.Colorify{Attr: colorify.Bold, NoColor: "false"}
 	colEmpty := colorify.Colorify{Attr: colorify.Regular}
 	// The color schemes are columnar, which now means you can use one color for out print output
 	//or as many colors as you like. Colors can be set directly on the interface function level making it easier.
