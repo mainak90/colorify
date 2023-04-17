@@ -19,23 +19,24 @@ It gets the job done and I use it frequently to generate colorized output myself
 ```go
     // Initialite a colorify struct. Structs can be initialized either with only string attributes(bold/italics/reverse)
 	// Or also with color values set.
-	// Example --> Struct with no color set. 
-	noColStruct := colorify.Colorify{Attr: colorify.Underline}
-    // Example --> Struct with color preset.
+	// Example --> Struct with no color set. You can also set the NoColor flag to force color output or supress it. 
+	//Keeping it UnSet allows the library to determine if its a tty and output colored output in that case.
+	noColStruct := colorify.Colorify{Attr: colorify.Underline, NoColor: "false"}
+	// Example --> Struct with color preset.
 	withColStruct := colorify.Colorify{Color: colorify.Green, Attr: colorify.Bold}
 	// Supported attributes --> 
 	1. `colorify.Regular`: Regular text format.
 	2. `colorify.Italics`: Italicized text format.
 	3. `colorify.Transparent`: Transparent text format.
 	4. 	`colorify.Reverse`: Background reversed text format.
-    // Invoking the print functions after this is just as easy as calling the appropriate ones with particular arguments.
+	// Invoking the print functions after this is just as easy as calling the appropriate ones with particular arguments.
 	// Please note that the library has support column based coloring scheme, which means you can have as many colors in 
 	// one single line as you want.
 	io.WriteString(os.Stdout, noColStruct.Sprintln("This is regular", colorify.Green, "This is green!"))
 	noColStruct.Println(colorify.Red, "[Error]", colorify.Yellow, "This is a new error")
-    io.WriteString(os.Stdout, col.Sprintln("\n", colorify.Blue, "This", "is", "Sparta"))
-	// Example with color initialized in struct.
-    withColStruct.Println("Should be green and bold!")
+	io.WriteString(os.Stdout, col.Sprintln("\n", colorify.Blue, "This", "is", "Sparta"))
+	// Example with color initialized in struct. 
+	withColStruct.Println("Should be green and bold!")
 ```
 
 For more examples checkout the `examples/` directory.

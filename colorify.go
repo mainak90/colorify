@@ -7,7 +7,10 @@ package colorify
 
 import (
 	"fmt"
+	tb "github.com/mainak90/trickB"
+	"github.com/mattn/go-isatty"
 	"io"
+	"os"
 )
 
 // Main struct for interfacing with all golang fmt functions.  Elems -->  1. Color --> The colored o/p choice.
@@ -16,7 +19,7 @@ import (
 type Colorify struct {
 	Color       Color
 	Attr        Attr
-	NoColor     bool
+	NoColor     string
 	ColorScheme string
 }
 
@@ -50,6 +53,18 @@ var (
 	Regular   		Attr  = "0;"
 )
 
+func doColor(c *Colorify) bool {
+	switch tb.TrickBFromString(c.NoColor) {
+	case tb.UnSet:
+		return isatty.IsTerminal(os.Stdout.Fd()) || isatty.IsCygwinTerminal(os.Stdout.Fd())
+	case tb.True:
+		return false
+	case tb.False:
+		return true
+	default:
+		return true
+	}
+}
 
 func stringifyColumnar(c *Colorify, inf ...interface{}) string {
 	var infString string
@@ -58,8 +73,12 @@ func stringifyColumnar(c *Colorify, inf ...interface{}) string {
 	for _, val := range inf {
 		switch val.(type) {
 		case Color:
-			colScheme := makeColorString(c, val.(Color))
-			infString += fmt.Sprintf("%s", colScheme)
+			if doColor(c) {
+				colScheme := makeColorString(c, val.(Color))
+				infString += fmt.Sprintf("%s", colScheme)
+			} else {
+				continue
+			}
 		case string:
 			infString += fmt.Sprintf("%s%s", " ", val)
 		default:
